@@ -33,8 +33,8 @@ def generate_html(animals_info, template_path, output_path):
     with open(output_path, "w") as output_file:
         output_file.write(updated_content)
 
-# Replace 'your_api_url_here' with the actual API URL
-animal_name = 'fox'
+# Ask the user for the animal name
+animal_name = input("Enter a name of an animal: ")
 api_url = f'https://api.api-ninjas.com/v1/animals?name={animal_name}'
 headers = {'X-Api-Key': 'DvIoMAmPdJJzgK+zTp6uMQ==u6mcPpCQgdZY7LeU'}
 
@@ -45,3 +45,5 @@ for animal in animals_data:
     all_animals_info += get_animal_info(animal) + "\n"
 
 generate_html(all_animals_info, 'animals_template.html', 'animals.html')
+
+print("Website was successfully generated to the file animals.html.")
