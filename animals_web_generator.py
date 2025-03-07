@@ -40,9 +40,17 @@ headers = {'X-Api-Key': 'DvIoMAmPdJJzgK+zTp6uMQ==u6mcPpCQgdZY7LeU'}
 
 animals_data = load_data(api_url, headers)
 
-all_animals_info = ""
-for animal in animals_data:
-    all_animals_info += get_animal_info(animal) + "\n"
+if not animals_data:
+    all_animals_info = """
+    <li class='cards__item'>
+        <div class='card__title'>I'm sorry, that's an interesting name, but that animal doesn't exist or is not registered in our database... yet?</div>
+        <img src='fake_animal.jpg' alt='Fake Animal' style='width:50%;height:auto;'/>
+    </li>
+    """
+else:
+    all_animals_info = ""
+    for animal in animals_data:
+        all_animals_info += get_animal_info(animal) + "\n"
 
 generate_html(all_animals_info, 'animals_template.html', 'animals.html')
 
