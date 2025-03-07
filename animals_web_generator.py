@@ -1,11 +1,11 @@
 import json
+import requests
 
-
-def load_data(file_path):
-    """Loads a JSON file"""
-    with open(file_path, "r") as handle:
-        return json.load(handle)
-
+def load_data(api_url, headers):
+    """Fetches data from an API"""
+    response = requests.get(api_url, headers=headers)
+    response.raise_for_status()  # Raise an error for bad status codes
+    return response.json()
 
 def get_animal_info(animal):
     """Returns the specified fields of an animal as a formatted string if they exist"""
@@ -23,7 +23,6 @@ def get_animal_info(animal):
         info.append("</p></li>")
     return "\n".join(info)
 
-
 def generate_html(animals_info, template_path, output_path):
     """Generates an HTML file with the animals' information"""
     with open(template_path, "r") as template_file:
@@ -34,8 +33,12 @@ def generate_html(animals_info, template_path, output_path):
     with open(output_path, "w") as output_file:
         output_file.write(updated_content)
 
+# Replace 'your_api_url_here' with the actual API URL
+animal_name = 'fox'
+api_url = f'https://api.api-ninjas.com/v1/animals?name={animal_name}'
+headers = {'X-Api-Key': 'DvIoMAmPdJJzgK+zTp6uMQ==u6mcPpCQgdZY7LeU'}
 
-animals_data = load_data('animals_data.json')
+animals_data = load_data(api_url, headers)
 
 all_animals_info = ""
 for animal in animals_data:
