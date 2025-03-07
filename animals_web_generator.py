@@ -1,11 +1,4 @@
-import json
-import requests
-
-def load_data(api_url, headers):
-    """Fetches data from an API"""
-    response = requests.get(api_url, headers=headers)
-    response.raise_for_status()  # Raise an error for bad status codes
-    return response.json()
+import data_fetcher
 
 def get_animal_info(animal):
     """Returns the specified fields of an animal as a formatted string if they exist"""
@@ -35,10 +28,9 @@ def generate_html(animals_info, template_path, output_path):
 
 # Ask the user for the animal name
 animal_name = input("Enter a name of an animal: ")
-api_url = f'https://api.api-ninjas.com/v1/animals?name={animal_name}'
-headers = {'X-Api-Key': 'DvIoMAmPdJJzgK+zTp6uMQ==u6mcPpCQgdZY7LeU'}
 
-animals_data = load_data(api_url, headers)
+# Fetch data using the data_fetcher module
+animals_data = data_fetcher.fetch_data(animal_name)
 
 if not animals_data:
     all_animals_info = """
