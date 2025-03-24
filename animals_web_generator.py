@@ -26,24 +26,28 @@ def generate_html(animals_info, template_path, output_path):
     with open(output_path, "w") as output_file:
         output_file.write(updated_content)
 
-# Ask the user for the animal name
-animal_name = input("Enter a name of an animal: ")
+def main():
+    # Ask the user for the animal name
+    animal_name = input("Enter a name of an animal: ")
 
-# Fetch data using the data_fetcher module
-animals_data = data_fetcher.fetch_data(animal_name)
+    # Fetch data using the data_fetcher module
+    animals_data = data_fetcher.fetch_data(animal_name)
 
-if not animals_data:
-    all_animals_info = """
-    <li class='cards__item'>
-        <div class='card__title'>I'm sorry, that's an interesting name, but that animal doesn't exist or is not registered in our database... yet?</div>
-        <img src='fake_animal.jpg' alt='Fake Animal' style='width:50%;height:auto;'/>
-    </li>
-    """
-else:
-    all_animals_info = ""
-    for animal in animals_data:
-        all_animals_info += get_animal_info(animal) + "\n"
+    if not animals_data:
+        all_animals_info = """
+        <li class='cards__item'>
+            <div class='card__title'>I'm sorry, that's an interesting name, but that animal doesn't exist or is not registered in our database... yet?</div>
+            <img src='fake_animal.jpg' alt='Fake Animal' style='width:50%;height:auto;'/>
+        </li>
+        """
+    else:
+        all_animals_info = ""
+        for animal in animals_data:
+            all_animals_info += get_animal_info(animal) + "\n"
 
-generate_html(all_animals_info, 'animals_template.html', 'animals.html')
+    generate_html(all_animals_info, 'animals_template.html', 'animals.html')
 
-print("Website was successfully generated to the file animals.html.")
+    print("Website was successfully generated to the file animals.html.")
+
+if __name__ == "__main__":
+    main()
